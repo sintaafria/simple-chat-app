@@ -28,3 +28,12 @@ export const logoutRequest = payload =>
 	})
 		.then(res => Promise.resolve(res))
 		.catch(err => Promise.reject(err));
+
+export const signupRequest = payload =>
+	instance({
+		url: "/auth/register",
+		method: "post",
+		data: payload,
+	})
+		.then(res => Promise.resolve(res))
+		.catch(err => Promise.reject(err));

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { loginRequest, logoutRequest, userProfileRequest } from '../../services/auth'
+import { loginRequest, logoutRequest, signupRequest, userProfileRequest } from '../../services/auth'
 
 const initialState = {
   user_data: null,
@@ -31,12 +31,23 @@ export const logout = createAsyncThunk(
   }
 )
 
+export const signup = createAsyncThunk(
+  'user/signupRequest',
+  async(payload) => {
+    const {data} = await signupRequest(payload)
+    return data
+  }
+)
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUserData: (state, action) => {
       state.user_data = action.payload
+    },
+    setError: (state, action) => {
+      state.error = action.payload
     }
   },
   extraReducers: builder => {
@@ -78,18 +89,21 @@ export const userSlice = createSlice({
         state.isLoading = false
         state.error = action.error?.message || action.error
       })
+      .addCase(signup.pending, state => {
+        state.isLoading = true
+        state.error = ""
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.user_data = action.payload
+      })
+      .addCase(signup.rejected, (state, action) =>{
+        state.isLoading = false
+        state.error = action.error?.message || action.error
+      })
   }
 })
 
-export const { setUserData } = userSlice.actions
-
-// export const selectCount = state => state.counter.value
-
-// export const incrementIfOdd = amount => (dispatch, getState) => {
-//   const currentValue = selectCount(getState())
-//   if (currentValue % 2 === 1) {
-//     dispatch(incrementByAmount(amount))
-//   }
-// }
+export const { setUserData, setError } = userSlice.actions
 
 export default userSlice.reducer

@@ -1,10 +1,9 @@
 import { Alert, Button, Card, Checkbox, Form, Input } from "antd";
 import { Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login, setUserData } from "../../redux/user/slice";
-import { useForm } from "antd/es/form/Form";
 
 const { Title, Text } = Typography;
 
@@ -19,7 +18,10 @@ export default function Signin() {
 
 	useEffect(() => {
 		if (localStorage.getItem("token")) navigate("/");
-		else dispatch(setUserData(null));
+		else {
+			navigate('/signin')
+			dispatch(setUserData(null));
+		}
 	}, [user_data]);
 
 	return (

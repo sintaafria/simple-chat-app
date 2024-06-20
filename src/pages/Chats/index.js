@@ -8,19 +8,27 @@ import {
 	Tooltip,
 	Typography,
 } from "antd";
-import { UserOutlined, BellFilled, PlusOutlined } from "@ant-design/icons";
+import {
+	UserOutlined,
+	BellFilled,
+	MessageOutlined,
+	SearchOutlined
+} from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, userProfile } from "../../redux/user/slice";
+import './style.css'
+import { logout, userProfile } from "../../redux/auth/slice";
 import { useNavigate } from "react-router-dom";
+import NewChatDrawer from "./components/NewChatDrawer";
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
 export default function Chats() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { user_data, isLoading } = useSelector(state => state.user);
+	const { user_data, isLoading } = useSelector(state => state.auth);
 	const [showUserProfile, setShowUserProfile] = useState(false);
+	const [showDrawer, setShowDrawer] = useState(false)
 
 	useEffect(() => {
 		if (!localStorage.getItem("token")) navigate("/signin");
@@ -41,11 +49,13 @@ export default function Chats() {
 						gap: "30px",
 					}}
 				>
-					<Input
-						placeholder="Search user"
-						prefix={<UserOutlined />}
-						style={{ width: "200px" }}
-					/>
+					<Button 
+						icon={<MessageOutlined />} 
+						iconPosition="end"
+						onClick={() => setShowDrawer(true)}
+					>
+						New Chat
+					</Button>
 					<Title
 						level={3}
 						style={{
@@ -85,14 +95,11 @@ export default function Chats() {
 							backgroundColor: "#FFFFFF",
 						}}
 					>
-						<Flex justify="end">
-							<Button
-								icon={<PlusOutlined />}
-								iconPosition={"end"}
-							>
-								New Group Chat
-							</Button>
-						</Flex>
+						<Input
+							placeholder="Search"
+							size="large"
+							prefix={<SearchOutlined style={{color: "#7d7c7c", marginRight: "16px"}} />}
+						/>
 					</Sider>
 					<Content
 						style={{
@@ -121,6 +128,7 @@ export default function Chats() {
 					</Content>
 				</Layout>
 			</Layout>
+			<NewChatDrawer open={showDrawer} onClose={() => setShowDrawer(false)}/>
 			<Modal
 				title="User Profile"
 				open={showUserProfile}
@@ -135,14 +143,29 @@ export default function Chats() {
 					/>
 					<Title
 						level={4}
-						style={{ fontWeight: 500, marginTop: "24px", marginBottom:0 }}
+						style={{
+							fontWeight: 500,
+							marginTop: "24px",
+							marginBottom: 0,
+						}}
 					>
 						{user_data?.name}
 					</Title>
-					<Title level={5} style={{ fontWeight: 400, marginTop: 0, marginBottom: "16px" }}>
+					<Title
+						level={5}
+						style={{
+							fontWeight: 400,
+							marginTop: 0,
+							marginBottom: "16px",
+						}}
+					>
 						{user_data?.email}
 					</Title>
-					<Button type="primary" loading={isLoading} onClick={() => dispatch(logout())}>
+					<Button
+						type="primary"
+						loading={isLoading}
+						onClick={() => dispatch(logout())}
+					>
 						Sign out
 					</Button>
 				</div>

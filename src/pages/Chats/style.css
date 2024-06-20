@@ -2,3 +2,17 @@
     min-height: 100vh;
     display: flex;
 }
+
+.user-card{
+    background-color: #f6f6f6;
+    border: none;
+    cursor: pointer;
+}
+
+.user-card:hover{
+    background-color: #f5f8fd;
+}
+
+.user-card .ant-card-body{
+    padding: 8px 12px;
+}

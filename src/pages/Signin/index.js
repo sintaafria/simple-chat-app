@@ -3,14 +3,14 @@ import { Typography } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login, setUserData } from "../../redux/user/slice";
+import { login, setUserData } from "../../redux/auth/slice";
 
 const { Title, Text } = Typography;
 
 export default function Signin() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { error, user_data, isLoading } = useSelector(state => state.user);
+	const { error, user_data, isLoading } = useSelector(state => state.auth);
 
 	const handleSubmit = value => {
 		dispatch(login(value));

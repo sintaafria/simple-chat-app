@@ -80,7 +80,7 @@ export default function NewChatDrawer({ open, onClose }) {
 					))
 				) : (
 					isLoading ?
-					<Skeleton avatar paragraph={{ rows: 2 }} />:
+					<Skeleton avatar paragraph={{ rows: 1 }} />:
 					<Text
 						style={{
 							color: "rgb(170, 170, 170)",

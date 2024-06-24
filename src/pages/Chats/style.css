@@ -16,3 +16,31 @@
 .user-card .ant-card-body{
     padding: 8px 12px;
 }
+
+.chat-list{
+    cursor: pointer;
+}
+
+.chat-list .ant-list-item{
+    padding: 0 16px;
+    border: none;
+}
+
+.chat-list .ant-list-item-meta{
+    padding: 12px 0;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+.chat-list .ant-list-item:last-child .ant-list-item-meta{
+    border: none;
+}
+
+.chat-list .ant-list-item:hover{
+    background-color: #EFEFEF;
+}
+
+.chat-list .ant-list-item-meta-description{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

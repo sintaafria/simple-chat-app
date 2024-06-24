@@ -2,9 +2,9 @@ import {
 	Avatar,
 	Button,
 	Flex,
-	Input,
 	Layout,
 	Modal,
+	Spin,
 	Tooltip,
 	Typography,
 } from "antd";
@@ -12,7 +12,6 @@ import {
 	UserOutlined,
 	BellFilled,
 	MessageOutlined,
-	SearchOutlined
 } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +19,8 @@ import './style.css'
 import { logout, userProfile } from "../../redux/auth/slice";
 import { useNavigate } from "react-router-dom";
 import NewChatDrawer from "./components/NewChatDrawer";
-const { Header, Content, Sider } = Layout;
+import ChatList from "./components/ChatList";
+const { Header, Content } = Layout;
 const { Title } = Typography;
 
 export default function Chats() {
@@ -40,6 +40,8 @@ export default function Chats() {
 	}, [user_data]);
 
 	return (
+		!user_data || isLoading ?
+		<Spin spinning={isLoading} fullscreen />:
 		<>
 			<Layout>
 				<Header
@@ -87,20 +89,7 @@ export default function Chats() {
 				<Layout
 					style={{ padding: "24px", height: "calc(100vh - 64px)" }}
 				>
-					<Sider
-						width="320px"
-						style={{
-							borderRadius: "10px",
-							padding: "20px 16px",
-							backgroundColor: "#FFFFFF",
-						}}
-					>
-						<Input
-							placeholder="Search"
-							size="large"
-							prefix={<SearchOutlined style={{color: "#7d7c7c", marginRight: "16px"}} />}
-						/>
-					</Sider>
+					<ChatList/>
 					<Content
 						style={{
 							backgroundColor: "#FFFFFF",

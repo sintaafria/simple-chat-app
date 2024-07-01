@@ -1,9 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
 import { searchUserRequest } from '../../services/user'
 import { chatListRequest } from '../../services/chat'
 
 const initialState = {
   chat_list: [],
+  open_chat: null,
   isLoading: false,
   error: ""
 }
@@ -23,6 +24,9 @@ export const chatSlice = createSlice({
     setChatList: (state, action) => {
       state.chat_list = action.payload
     },
+    setOpenChat: (state, action) => {
+      state.open_chat = action.payload
+    },
     setError: (state, action) => {
       state.error = action.payload
     }
@@ -31,6 +35,7 @@ export const chatSlice = createSlice({
     builder
       .addCase(chatList.pending, state => {
         state.isLoading = true
+        state.chat_list = []
         state.error = ""
       })
       .addCase(chatList.fulfilled, (state, action) => {
@@ -44,6 +49,6 @@ export const chatSlice = createSlice({
   }
 })
 
-export const { setChatList, setError } = chatSlice.actions
+export const { setChatList, setOpenChat, setError } = chatSlice.actions
 
 export default chatSlice.reducer

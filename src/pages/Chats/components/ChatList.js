@@ -1,16 +1,16 @@
-import { Avatar, Flex, Input, Layout, List, Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import { Avatar, Input, Layout, List, Typography } from "antd";
+import React, { useEffect } from "react";
 import { SearchOutlined, UserOutlined, TeamOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { chatList } from "../../../redux/chat/slice";
+import { chatList, setOpenChat } from "../../../redux/chat/slice";
+import { allMessages } from "../../../redux/message/slice";
 const { Sider } = Layout;
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
-export default function ChatList() {
+export default function 	ChatList() {
 	const dispatch = useDispatch();
-	const { chat_list, isLoading } = useSelector(state => state.chat);
+	const { chat_list, open_chat} = useSelector(state => state.chat);
 	const { user_data } = useSelector(state => state.auth);
-	const [search, setSearch] = useState("");
 
 	useEffect(() => {
 		dispatch(chatList());
@@ -46,7 +46,13 @@ export default function ChatList() {
 							itemLayout="horizontal"
 							dataSource={chat_list}
 							renderItem={(item, index) => (
-								<List.Item key={index}>
+								<List.Item 
+									className={item?._id == open_chat?._id ? "active" : ""}
+									key={index} 
+									onClick={() => {
+									dispatch(setOpenChat(item))
+									dispatch(allMessages(item._id))}
+								}>
 									<List.Item.Meta
 										avatar={
 											<Avatar
@@ -94,22 +100,6 @@ export default function ChatList() {
 						/>
 					</>
 				) : null
-				// ) : (
-				// 	isLoading ?
-				// 	<Skeleton avatar paragraph={{ rows: 1 }} />:
-				// 	<Text
-				// 		style={{
-				// 			color: "rgb(170, 170, 170)",
-				// 			margin: "0 auto",
-				// 		}}
-				// 	>
-				// 		{
-				// 			search.length ?
-				// 			"No result found":
-				// 			"Results will apear here"
-				// 		}
-				// 	</Text>
-				// )
 			}
 		</Sider>
 	);

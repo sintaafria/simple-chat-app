@@ -35,7 +35,7 @@
     border: none;
 }
 
-.chat-list .ant-list-item:hover{
+.chat-list .ant-list-item:hover, .chat-list .ant-list-item.active{
     background-color: #EFEFEF;
 }
 
@@ -43,4 +43,16 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.message {
+    border-radius: 10px;
+    padding: 6px 12px;
+    background-color: #EFEFEF;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.message p{
+    margin: 0
 }

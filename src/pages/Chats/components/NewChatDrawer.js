@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Avatar, Button, Divider, Drawer, Flex, Input, Skeleton, Typography } from "antd";
 import {
 	SearchOutlined,

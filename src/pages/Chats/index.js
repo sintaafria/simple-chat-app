@@ -1,7 +1,6 @@
 import {
 	Avatar,
 	Button,
-	Flex,
 	Layout,
 	Modal,
 	Spin,
@@ -20,7 +19,8 @@ import { logout, userProfile } from "../../redux/auth/slice";
 import { useNavigate } from "react-router-dom";
 import NewChatDrawer from "./components/NewChatDrawer";
 import ChatList from "./components/ChatList";
-const { Header, Content } = Layout;
+import MessageContainer from "./components/MessageContainer";
+const { Header } = Layout;
 const { Title } = Typography;
 
 export default function Chats() {
@@ -90,31 +90,7 @@ export default function Chats() {
 					style={{ padding: "24px", height: "calc(100vh - 64px)" }}
 				>
 					<ChatList/>
-					<Content
-						style={{
-							backgroundColor: "#FFFFFF",
-							padding: "20px 16px",
-							marginLeft: "20px",
-							borderRadius: "10px",
-						}}
-					>
-						<Flex
-							justify="center"
-							align="center"
-							style={{ height: "100%" }}
-						>
-							<Title
-								level={4}
-								style={{
-									color: "#AAAAAA",
-									fontWeight: 400,
-									margin: "0 auto",
-								}}
-							>
-								Click on user to start chatting
-							</Title>
-						</Flex>
-					</Content>
+					<MessageContainer/>
 				</Layout>
 			</Layout>
 			<NewChatDrawer open={showDrawer} onClose={() => setShowDrawer(false)}/>
